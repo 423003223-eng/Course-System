@@ -1,89 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Course Form</title>
-    <style>
-        body{
-            display:flex;
-            justify-content:center;
-            background-color: 	#F0EAD6;
-        }
-        form{
-            background-color:#FFFFFF;
-            display:flex;
-            flex-direction:column;
-            border:4px solid #00AB41;
-            border-radius: 30px;
-            width: 40%;
-            margin: 5vw;
-            padding: 2%;
-        }
-        label{
-            margin-bottom:5px;
-        }
-        input[type=text]{
-            border: 2px solid #8BC8A4;
-            border-radius: 10px;
-            width:96%;
-            min-height:30px;
-            padding:0% 2%;
-        }
-        input[type=text]:hover, input[type=text]:focus{
-            border: 2px solid #00AB41;
-            outline:none;
-        }
-        input[type=submit], input[type=button]{
-            border-radius: 20px;
-            padding: 1vw;
-            margin: 1.5vw 1.5vw;
-            min-width: 10em;
-            min-height: 4em;
-            width: 10vw;
-            background-color: #00AB41;
-            color:#FFFFFF;
-            border: 2px solid #00AB41;
-            cursor: pointer;
-        }
-        input[type=submit]:hover, input[type=button]:hover{
-            background-color: #FFFFFF;
-            color: #00AB41;
-        }
-        #buttonContainer{
-            width:100%;
-            display:flex;
-            justify-content:center;
-        }
-        span{
-            color: red;
-        }
-    </style>
-</head>
-<body>
-    <form action="/courses/update/<?= esc($course['id']) ?>" method="POST">
-        <h2>Update Course Details</h2>
-        <label for="course_name">Course Name:</label>
-        <input type="text" id="course_name" name="course_name" value = "<?= esc($course['course_name']) ?>">
-        <br>
-        <label for="course_code">Course Code:</label>
-        <input type="text" id="course_code" name="course_code" value = "<?= esc($course['course_code']) ?>">
-        <br>
-        <label for="units">Units:</label>
-        <input type="text" id="units" name="units" value = "<?= esc($course['units']) ?>">
-        <br>
-        <label for="instructor">Instructor:</label>
-        <input type="text" id="instructor" name="instructor" value = "<?= esc($course['instructor']) ?>">
-        <br>
-        <?php if (!empty($errors)): ?>
-            <?php foreach ($errors as $error): ?>
-                <span>*<?= esc($error) ?></span>
-            <?php endforeach ?>
-        <?php endif ?>
-        <div id="buttonContainer">\
-        <a href="/courses/"><input type="button" value="Back"></a>
-        <input type="submit" name="update" value="Update">
+<?= $this->extend('layouts/main') ?>
+
+<?= $this->section('title') ?>Update course<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-6">
+        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between gap-3 mb-4">
+            <div>
+                <h1 class="h3 mb-1">Update course</h1>
+
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <?php if (!empty($errors)) : ?>
+                    <div class="alert alert-danger">
+                        <div class="fw-semibold mb-2">Please fix the following:</div>
+                        <ul class="mb-0">
+                            <?php foreach ($errors as $error) : ?>
+                                <li><?= esc($error) ?></li>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
+                <?php endif ?>
+
+                <form action="/courses/update/<?= esc($course['id']) ?>" method="POST" class="row g-3">
+                    <div class="col-12">
+                        <label for="course_name" class="form-label">Course name</label>
+                        <input type="text" class="form-control" id="course_name" name="course_name"
+                               value="<?= esc(old('course_name', $course['course_name'] ?? '')) ?>">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="course_code" class="form-label">Course code</label>
+                        <input type="text" class="form-control" id="course_code" name="course_code"
+                               value="<?= esc(old('course_code', $course['course_code'] ?? '')) ?>">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="units" class="form-label">Units</label>
+                        <input type="text" class="form-control" id="units" name="units"
+                               value="<?= esc(old('units', $course['units'] ?? '')) ?>">
+                    </div>
+                    <div class="col-12">
+                        <label for="instructor" class="form-label">Instructor</label>
+                        <input type="text" class="form-control" id="instructor" name="instructor"
+                               value="<?= esc(old('instructor', $course['instructor'] ?? '')) ?>">
+                    </div>
+
+                    <div class="col-12 d-flex flex-column flex-sm-row gap-2 justify-content-end pt-2">
+                        <a class="btn btn-outline-secondary" href="/courses">Cancel</a>
+                        <button type="submit" name="update" value="1" class="btn btn-primary">Update course</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-</body>
-</html>
+    </div>
+</div>
+<?= $this->endSection() ?>
